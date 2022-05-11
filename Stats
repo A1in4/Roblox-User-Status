@@ -3,10 +3,10 @@
 // Settings
 var settings = {
     roblox: {
-        userID: 1
+        userID: 374976114
     },
     discord: {
-        webhookURL: "", // Webhook URL
+        webhookURL: "https://discord.com/api/webhooks/973932244152500234/6WzkAs4giPMw8mvoIkWtm4fptvQJ0eAw0lzcaZfCIjO83D3q79FGEXGBjKgzpbwci7Az", // Webhook URL
         message: {
             username: "Roblox Account Status", // Webhook Username
         }
