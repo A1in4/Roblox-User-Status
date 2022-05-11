@@ -1,0 +1,42 @@
+// Created by Ferris on V3rmillion <3
+
+// Settings
+var settings = {
+    roblox: {
+        userID: 1
+    },
+    discord: {
+        webhookURL: "", // Webhook URL
+        message: {
+            username: "Roblox Account Status", // Webhook Username
+        }
+    },
+    interval: 5000 // The interval to check [CANT BE TOO SHORT, GIVE IT LIKE ~3 SECONDS OR SOMETHING]
+}
+
+// The code!!
+var mostRecentStatus = false
+
+var loop = setInterval(() => {
+    var request = new XMLHttpRequest();
+    request.addEventListener("load", compareStatus)
+    request.open("GET", `https://api.roblox.com/users/${settings.roblox.userID}/onlinestatus`);
+    request.send();
+}, settings.interval);
+
+function compareStatus() {
+    var data = JSON.parse(this.response),
+        isOnline = data["IsOnline"];
+
+    if (isOnline != mostRecentStatus) {
+        var hook = new XMLHttpRequest();
+        hook.open("POST", settings.discord.webhookURL);
+        var hookData = {
+            username: settings.discord.message.username,
+            avatar_url: `https://www.roblox.com/headshot-thumbnail/image?userId=${settings.roblox.userID}&width=420&height=420&format=png`,
+            content: "The user is now " + isOnline ? "online" : "offline"
+        }
+        mostRecentStatus = isOnline;
+        hook.send(JSON.stringify(hookData));
+    }
+}
